@@ -11,6 +11,7 @@ end
 class BinaryTree
 	def initialize
 		@root = nil
+		@queue = Array.new
 	end
 
 	def build_tree(data_array)
@@ -61,11 +62,24 @@ class BinaryTree
 		end
 	end
 
-	def call_print
-		print_tree(@root)
+	def breadth_first_search(target_value)
+		queue = Array.new
+		queue.push(@root)
+
+		while queue.any? { |node| node != nil }
+			if queue[0] == nil
+				queue.shift
+			elsif queue[0].value == target_value
+				return queue[0]
+			else
+				queue.push(queue[0].left, queue[0].right)
+				queue.shift
+			end
+		end
+		return nil
 	end
 
-	def print_tree(current_node)
+	def print_tree(current_node=@root)
 		return if current_node == nil
 		print "R:#{current_node.value} " 
 		if current_node.left != nil
@@ -84,5 +98,7 @@ end
 
 a = BinaryTree.new
 a.build_tree([5, 7, 4, 23, 8, 9])
-a.call_print
+a.print_tree
+test = a.breadth_first_search(4)
+puts "node: #{test} value: #{test.value}"
 
