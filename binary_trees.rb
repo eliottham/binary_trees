@@ -37,7 +37,7 @@ class BinaryTree
 				current_root.left = node
 				node.parent = current_root
 				return
-			else
+			elsif node.value < current_root.left.value
 				new_current_root = current_root.left
 				add_node(node, new_current_root)
 			end
@@ -54,7 +54,7 @@ class BinaryTree
 				current_root.right = node
 				node.parent = current_root
 				return
-			else
+			elsif node.value > current_root.right.value
 				new_current_root = current_root.right
 				add_node(node, new_current_root)
 			end
@@ -63,12 +63,18 @@ class BinaryTree
 
 	def call_print
 		print_tree(@root)
-		puts @root.class
 	end
 
 	def print_tree(current_node)
 		return if current_node == nil
-		puts "R:#{current_node.value} L:#{current_node.right.value} R:#{current_node.right.value}}"
+		print "R:#{current_node.value} " 
+		if current_node.left != nil
+			print "L:#{current_node.left.value} "
+		end
+		if current_node.right != nil
+			print "R:#{current_node.right.value} "
+		end
+		print "\n"
 		print_tree(current_node.left)
 		print_tree(current_node.right)
 	end
@@ -77,6 +83,6 @@ end
 
 
 a = BinaryTree.new
-a.build_tree([1, 7, 4, 23, 8, 9])
+a.build_tree([5, 7, 4, 23, 8, 9])
 a.call_print
 
