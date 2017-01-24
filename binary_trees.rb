@@ -94,11 +94,6 @@ class BinaryTree
 		dfs_rec(target_value, current_root.right) if current_root.right != nil
 	end
 
-
-
-
-
-
 	def print_tree(current_node=@root)
 		return if current_node == nil
 		print "ROOT:#{current_node.value} " 
@@ -117,14 +112,3 @@ class BinaryTree
 		print_tree(current_node.right)
 	end
 end
-
-
-
-a = BinaryTree.new
-a.build_tree([5, 7, 4, 23, 8, 9])
-a.print_tree
-test = a.breadth_first_search(4)
-puts "node: #{test} value: #{test.value}"
-test2 = a.dfs_rec(23)
-puts "node: #{test2} value: #{test2.value}"
-
