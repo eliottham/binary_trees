@@ -11,7 +11,6 @@ end
 class BinaryTree
 	def initialize
 		@root = nil
-		@queue = Array.new
 	end
 
 	def build_tree(data_array)
@@ -67,26 +66,42 @@ class BinaryTree
 		queue.push(@root)
 
 		while queue.any? { |node| node != nil }
-			if queue[0] == nil
-				queue.shift
-			elsif queue[0].value == target_value
-				return queue[0]
-			else
-				queue.push(queue[0].left, queue[0].right)
-				queue.shift
-			end
+			return queue[0] if queue[0].value == target_value
+			queue << queue[0].left if queue[0].left != nil
+			queue << queue[0].right if queue[0].right != nil
+			queue.shift
 		end
 		return nil
 	end
 
+	def depth_first_search(target_value)
+		stack = Array.new
+		stack.push(@root)
+
+		until stack.empty?
+			node = stack.pop
+			return node if node.value == target_value
+			stack << node.left if node.left != nil
+			stack << node.right if node.right != nil
+		end
+		return nil
+	end
+
+
+
+
 	def print_tree(current_node=@root)
 		return if current_node == nil
-		print "R:#{current_node.value} " 
+		print "ROOT:#{current_node.value} " 
 		if current_node.left != nil
 			print "L:#{current_node.left.value} "
+		else
+			print "L: "
 		end
 		if current_node.right != nil
 			print "R:#{current_node.right.value} "
+		else
+			print "R: "
 		end
 		print "\n"
 		print_tree(current_node.left)
@@ -101,4 +116,6 @@ a.build_tree([5, 7, 4, 23, 8, 9])
 a.print_tree
 test = a.breadth_first_search(4)
 puts "node: #{test} value: #{test.value}"
+test2 = a.depth_first_search(23)
+puts "node: #{test2} value: #{test2.value}"
 
